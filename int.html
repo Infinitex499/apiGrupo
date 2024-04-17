@@ -5,22 +5,133 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Api Stars Wars</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <html lang="en">
+      <style>
+      
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+/*este es el fondo de la derecha, para modificar cuanto ocupa cambiar el "width"*/
+        .background-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+/*este es el fondo de la izquierda, para modificar cuanto ocupa cambiar el "width"*/
+        .left-background, .right-background { 
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+        }
+
+        .left-background {
+            background-color: lightblue; /* ajusta el color de la parte izquierda */
+            left: 0;
+        }
+
+        .right-background {
+            background-color: lightcoral; /*ajusta el color de lo de derecho*/
+            right: 0;
+        }
+
+        /*pone ubicacion de la tabla */
+        .table-container {
+            position: absolute;
+            top: 50%; /* esto uhhh hace que ta arriba o abajo esta*/
+            left: 25%; /*derecha a izquierda*/
+            transform: translate(-50%, -50%);
+            z-index: 1; /*esto hace que la tabla no sea horrible y este enfrente de el fondo*/
+        }
+
+        /* Style for the table */
+        .table {
+            border-collapse: collapse;
+            width: 325%; /*que tan gordo horizontalmente es la tabla*/
+            margin: 0 auto; /*esto pone la tabla en el centro */
+        }
+
+        .table th, .table td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        /*esto le pone estilo al titulo*/
+        .title {
+            text-align: center;
+            font-size: 70px;
+            margin-bottom: 20px;
+            position: absolute;
+            top: 10%; /*esto es para ajustar donde va el titulo :D*/
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2; /*esto pone el titulo arriba de la tabla*/
+            color: rgb(0, 0, 0), 0, 0; /*esto le da color :P*/
+        }
+    </style>
 </head>
 <body>
-    <script src="./script.js"></script> 
-    <table class="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Height</th>
-            <th>Mass</th>
-            <th>Gender</th>
-          </tr>
-        </thead>
-        <tbody>
+<div class="background-container">
+    <div class="left-background"></div>
+    <div class="right-background"></div>
+
+    <!-- este es el titulo -->
+    <h1 class="title">STAR  WARS</h1>
+
+    <!-- esto es lo que tiene la tabla -->
+    <div class="table-container">
+      <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Height</th>
+              <th>Mass</th>
+              <th>Gender</th>
+            </tr>
+          </thead>
           <tbody class="table-body"></tbody>
-        </tbody>
       </table>
+    </div>
+</div>
+
+<script> //un script que le pedi a AI, inseguro como funciona, o porque es necesario pero funciona, no tocar
+  document.addEventListener("DOMContentLoaded", function() {
+      // Function to fetch data from API and populate the table
+      function fetchDataAndPopulateTable() {
+          // Make an API call to fetch data
+          fetch("https://swapi.dev/api/people/")
+              .then(response => response.json())
+              .then(data => {
+                  // selecciona el elemento de la tabla (???)
+                  const tableBody = document.querySelector(".table-body");
+
+                  // Loop through the data and create table rows
+                  data.results.forEach(person => {
+                      // esto crea la tabla
+                      const row = document.createElement("tr");
+
+                      // esto le pone info a la tabla
+                      row.innerHTML = `
+                          <td>${person.name}</td>
+                          <td>${person.height}</td>
+                          <td>${person.mass}</td>
+                          <td>${person.gender}</td>
+                      `;
+
+                      // esto conecta los rows a la tabla
+                      tableBody.appendChild(row);
+                  });
+              })
+              .catch(error => {
+                  console.error("Error fetching data:", error);
+              });
+      }
+
+      // esto le hace fetch y agarra la info, odio html
+      fetchDataAndPopulateTable();
+  });
+</script>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </html>
