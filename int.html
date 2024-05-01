@@ -85,10 +85,10 @@
       <table class="table">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Height</th>
-              <th>Mass</th>
-              <th>Gender</th>
+              <th>Nombre</th>
+              <th>Altura</th>
+              <th>Peso</th>
+              <th>Genero</th>
             </tr>
           </thead>
           <tbody class="table-body"></tbody>
@@ -96,42 +96,7 @@
     </div>
 </div>
 
-<script> //un script que le pedi a AI, inseguro como funciona, o porque es necesario pero funciona, no tocar
-  document.addEventListener("DOMContentLoaded", function() {
-      // Function to fetch data from API and populate the table
-      function fetchDataAndPopulateTable() {
-          // Make an API call to fetch data
-          fetch("https://swapi.dev/api/people/")
-              .then(response => response.json())
-              .then(data => {
-                  // selecciona el elemento de la tabla (???)
-                  const tableBody = document.querySelector(".table-body");
-
-                  // Loop through the data and create table rows
-                  data.results.forEach(person => {
-                      // esto crea la tabla
-                      const row = document.createElement("tr");
-
-                      // esto le pone info a la tabla
-                      row.innerHTML = `
-                          <td>${person.name}</td>
-                          <td>${person.height}</td>
-                          <td>${person.mass}</td>
-                          <td>${person.gender}</td>
-                      `;
-
-                      // esto conecta los rows a la tabla
-                      tableBody.appendChild(row);
-                  });
-              })
-              .catch(error => {
-                  console.error("Error fetching data:", error);
-              });
-      }
-
-      // esto le hace fetch y agarra la info, odio html
-      fetchDataAndPopulateTable();
-  });
+<script src="./script.js"> 
 </script>
 </body>
 </html>
